@@ -4,7 +4,7 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { resolvers } from './graphql/resolvers.js';
+import { resolvers } from '../graphql/resolvers.js';
 import { readFileSync } from 'fs';
 
 
