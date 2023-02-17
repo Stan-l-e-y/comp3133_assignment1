@@ -13,6 +13,30 @@ export type Scalars = {
   Float: number;
 };
 
+export type AddEmployeeInput = {
+  email: Scalars['String'];
+  first_name: Scalars['String'];
+  gender: Gender;
+  last_name: Scalars['String'];
+  salary: Scalars['Float'];
+};
+
+export type Employee = {
+  __typename?: 'Employee';
+  email: Scalars['String'];
+  first_name: Scalars['String'];
+  gender: Scalars['String'];
+  id: Scalars['String'];
+  last_name: Scalars['String'];
+  salary: Scalars['Float'];
+};
+
+export enum Gender {
+  Female = 'FEMALE',
+  Male = 'MALE',
+  Other = 'OTHER'
+}
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -20,7 +44,13 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addEmployee: Employee;
   signUp: User;
+};
+
+
+export type MutationAddEmployeeArgs = {
+  addEmployeeInput?: InputMaybe<AddEmployeeInput>;
 };
 
 
@@ -128,8 +158,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  LoginInput: LoginInput;
+  AddEmployeeInput: AddEmployeeInput;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  Employee: ResolverTypeWrapper<Employee>;
+  Gender: Gender;
+  LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   SignUpInput: SignUpInput;
@@ -140,8 +174,11 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  LoginInput: LoginInput;
+  AddEmployeeInput: AddEmployeeInput;
   String: Scalars['String'];
+  Float: Scalars['Float'];
+  Employee: Employee;
+  LoginInput: LoginInput;
   Mutation: {};
   Query: {};
   SignUpInput: SignUpInput;
@@ -197,7 +234,18 @@ export type MapDirectiveArgs = {
 
 export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
+export type EmployeeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Employee'] = ResolversParentTypes['Employee']> = ResolversObject<{
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  first_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  gender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  last_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  salary?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addEmployee?: Resolver<ResolversTypes['Employee'], ParentType, ContextType, Partial<MutationAddEmployeeArgs>>;
   signUp?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationSignUpArgs>>;
 }>;
 
@@ -215,6 +263,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
+  Employee?: EmployeeResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
@@ -232,6 +281,15 @@ export type DirectiveResolvers<ContextType = any> = ResolversObject<{
 }>;
 
 import { ObjectId } from 'mongodb';
+export type EmployeeDbObject = {
+  email: string,
+  first_name: string,
+  gender: string,
+  _id: ObjectId,
+  last_name: string,
+  salary: number,
+};
+
 export type UserDbObject = {
   email: string,
   _id: ObjectId,

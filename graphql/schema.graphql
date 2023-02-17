@@ -5,6 +5,29 @@ type User @entity {
   password: String! @column
 }
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+type Employee @entity {
+  id: String! @id
+  first_name: String! @column
+  last_name: String! @column
+  email: String! @column
+  gender: String! @column
+  salary: Float! @column
+}
+
+input AddEmployeeInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  gender: Gender!
+  salary: Float!
+}
+
 input SignUpInput {
   username: String!
   email: String!
@@ -23,4 +46,5 @@ type Query {
 
 type Mutation {
   signUp(signUpInput: SignUpInput): User!
+  addEmployee(addEmployeeInput: AddEmployeeInput): Employee!
 }

@@ -1,5 +1,6 @@
 import { Resolvers } from '../src/generated/graphql';
 import { User } from '../models/user.js';
+import { Employee } from '../models/employee.js';
 import crypto from 'crypto';
 
 export const resolvers: Resolvers = {
@@ -31,6 +32,30 @@ export const resolvers: Resolvers = {
         id: res.id,
         password: res.password,
         username: res.username,
+      };
+    },
+
+    async addEmployee(
+      _,
+      { addEmployeeInput: { first_name, last_name, email, gender, salary } }
+    ) {
+      const newEmployee = new Employee({
+        first_name,
+        last_name,
+        email,
+        gender,
+        salary,
+      });
+
+      const employee = await newEmployee.save();
+
+      return {
+        id: employee.id,
+        first_name: employee.first_name,
+        last_name: employee.last_name,
+        email: employee.email,
+        gender: employee.gender,
+        salary: employee.salary,
       };
     },
   },
