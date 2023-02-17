@@ -6,9 +6,10 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { resolvers } from '../graphql/resolvers.js';
 import { readFileSync } from 'fs';
+import { DIRECTIVES } from '@graphql-codegen/typescript-mongodb';
 const typeDefs = readFileSync('./graphql/schema.graphql', { encoding: 'utf-8' });
 const server = new ApolloServer({
-    typeDefs,
+    typeDefs: [typeDefs, DIRECTIVES],
     resolvers,
 });
 await server.start();

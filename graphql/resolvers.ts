@@ -1,17 +1,37 @@
 import { Resolvers } from "../src/generated/graphql";
+import { User } from "../models/user.js";
 
 //test NOTE: remove
 
-type User = {
-    username: string
-}
+// type User = {
+//     id: string
+//     username: string
+// }
 
-const users: User[] = [{username: "bob"}, {username: "sam"}]
+// const users: User[] = [{id: "1", username: "bob"}, {id: "2", username: "sam"}]
 
 export const resolvers: Resolvers = {
-    Query: {
-        getUsers: () => {
-            return users
+    // Query: {
+    //     getUsers: () => {
+    //         return users
+    //     }
+    // }
+    Mutation: {
+        async signUp(_, {signUpInput: {username, email, password}}) {
+            const newUser = new User({
+                username,
+                email,
+                password
+            })
+
+            const res = await newUser.save();
+
+            return {
+                email: res.email,
+                id: res.id,
+                password: res.password,
+                username: res.username
+            }
         }
     }
 }
