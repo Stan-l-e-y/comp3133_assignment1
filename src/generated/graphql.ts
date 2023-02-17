@@ -13,6 +13,11 @@ export type Scalars = {
   Float: number;
 };
 
+export type LoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   signUp: User;
@@ -26,6 +31,12 @@ export type MutationSignUpArgs = {
 export type Query = {
   __typename?: 'Query';
   getUsers: Array<Maybe<User>>;
+  login: Scalars['String'];
+};
+
+
+export type QueryLoginArgs = {
+  loginInput?: InputMaybe<LoginInput>;
 };
 
 export type SignUpInput = {
@@ -117,10 +128,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
+  LoginInput: LoginInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   SignUpInput: SignUpInput;
-  String: ResolverTypeWrapper<Scalars['String']>;
   User: ResolverTypeWrapper<User>;
   AdditionalEntityFields: AdditionalEntityFields;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -128,10 +140,11 @@ export type ResolversTypes = ResolversObject<{
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
+  LoginInput: LoginInput;
+  String: Scalars['String'];
   Mutation: {};
   Query: {};
   SignUpInput: SignUpInput;
-  String: Scalars['String'];
   User: User;
   AdditionalEntityFields: AdditionalEntityFields;
   Boolean: Scalars['Boolean'];
@@ -190,6 +203,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   getUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+  login?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<QueryLoginArgs>>;
 }>;
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{

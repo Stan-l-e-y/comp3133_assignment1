@@ -1,20 +1,26 @@
 type User @entity {
-    id: String! @id
-    username: String! @column
-    email: String! @column
-    password: String! @column
+  id: String! @id
+  username: String! @column
+  email: String! @column
+  password: String! @column
 }
 
 input SignUpInput {
-    username: String!
-    email: String!
-    password: String!
+  username: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 type Query {
-    getUsers: [User]!
+  login(loginInput: LoginInput): String!
+  getUsers: [User]!
 }
 
 type Mutation {
-    signUp(signUpInput: SignUpInput): User!
+  signUp(signUpInput: SignUpInput): User!
 }
