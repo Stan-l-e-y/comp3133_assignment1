@@ -72,7 +72,7 @@ export const resolvers: Resolvers = {
     },
 
     async updateEmployee(_, { id, updateInput }) {
-      const employee = await await Employee.findByIdAndUpdate(id, updateInput);
+      const employee = await Employee.findByIdAndUpdate(id, updateInput);
       await employee.save();
 
       return employee;
