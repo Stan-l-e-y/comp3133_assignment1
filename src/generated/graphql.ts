@@ -32,6 +32,14 @@ export type Employee = {
   salary: Scalars['Float'];
 };
 
+export type EmployeeUpdateInput = {
+  email?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  gender?: InputMaybe<Gender>;
+  last_name?: InputMaybe<Scalars['String']>;
+  salary?: InputMaybe<Scalars['Float']>;
+};
+
 export enum Gender {
   Female = 'FEMALE',
   Male = 'MALE',
@@ -63,6 +71,7 @@ export type MutationSignUpArgs = {
 
 export type MutationUpdateEmployeeArgs = {
   id: Scalars['String'];
+  updateInput?: InputMaybe<EmployeeUpdateInput>;
 };
 
 export type Query = {
@@ -175,6 +184,7 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   Employee: ResolverTypeWrapper<Employee>;
+  EmployeeUpdateInput: EmployeeUpdateInput;
   Gender: Gender;
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
@@ -191,6 +201,7 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
   Float: Scalars['Float'];
   Employee: Employee;
+  EmployeeUpdateInput: EmployeeUpdateInput;
   LoginInput: LoginInput;
   Mutation: {};
   Query: {};

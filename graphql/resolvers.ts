@@ -70,5 +70,13 @@ export const resolvers: Resolvers = {
         salary: employee.salary,
       };
     },
+
+    async updateEmployee(_, { id, updateInput }) {
+      const employee = await (
+        await Employee.findByIdAndUpdate(id, updateInput)
+      ).save();
+
+      return employee;
+    },
   },
 };
