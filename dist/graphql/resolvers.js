@@ -13,6 +13,14 @@ export const resolvers = {
             }
             return 'invalid credentials';
         },
+        async getAllEmployees() {
+            const employees = await Employee.find({});
+            return employees;
+        },
+        async getEmployee(_, { id }) {
+            const employee = await Employee.findById(id);
+            return employee;
+        },
     },
     Mutation: {
         async signUp(_, { signUpInput: { username, email, password } }) {

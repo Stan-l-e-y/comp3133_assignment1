@@ -1,4 +1,4 @@
-import { Resolvers } from '../src/generated/graphql';
+import { Resolvers, EmployeeDbObject } from '../src/generated/graphql';
 import { User } from '../models/user.js';
 import { Employee } from '../models/employee.js';
 import crypto from 'crypto';
@@ -14,6 +14,18 @@ export const resolvers: Resolvers = {
         return 'Successfully logged in';
       }
       return 'invalid credentials';
+    },
+
+    async getAllEmployees() {
+      const employees = await Employee.find({});
+
+      return employees;
+    },
+
+    async getEmployee(_, { id }) {
+      const employee = await Employee.findById(id);
+
+      return employee;
     },
   },
   Mutation: {

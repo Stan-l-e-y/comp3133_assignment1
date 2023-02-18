@@ -4,6 +4,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -26,7 +27,7 @@ export type Employee = {
   email: Scalars['String'];
   first_name: Scalars['String'];
   gender: Scalars['String'];
-  id: Scalars['String'];
+  id?: Maybe<Scalars['String']>;
   last_name: Scalars['String'];
   salary: Scalars['Float'];
 };
@@ -46,6 +47,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addEmployee: Employee;
   signUp: User;
+  updateEmployee?: Maybe<Employee>;
 };
 
 
@@ -58,10 +60,21 @@ export type MutationSignUpArgs = {
   signUpInput?: InputMaybe<SignUpInput>;
 };
 
+
+export type MutationUpdateEmployeeArgs = {
+  id: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  getUsers: Array<Maybe<User>>;
+  getAllEmployees: Array<Maybe<Employee>>;
+  getEmployee?: Maybe<Employee>;
   login: Scalars['String'];
+};
+
+
+export type QueryGetEmployeeArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -238,7 +251,7 @@ export type EmployeeResolvers<ContextType = any, ParentType extends ResolversPar
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   first_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   gender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   last_name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   salary?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -247,10 +260,12 @@ export type EmployeeResolvers<ContextType = any, ParentType extends ResolversPar
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addEmployee?: Resolver<ResolversTypes['Employee'], ParentType, ContextType, Partial<MutationAddEmployeeArgs>>;
   signUp?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationSignUpArgs>>;
+  updateEmployee?: Resolver<Maybe<ResolversTypes['Employee']>, ParentType, ContextType, RequireFields<MutationUpdateEmployeeArgs, 'id'>>;
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getUsers?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
+  getAllEmployees?: Resolver<Array<Maybe<ResolversTypes['Employee']>>, ParentType, ContextType>;
+  getEmployee?: Resolver<Maybe<ResolversTypes['Employee']>, ParentType, ContextType, RequireFields<QueryGetEmployeeArgs, 'id'>>;
   login?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<QueryLoginArgs>>;
 }>;
 
@@ -285,7 +300,7 @@ export type EmployeeDbObject = {
   email: string,
   first_name: string,
   gender: string,
-  _id: ObjectId,
+  _id?: Maybe<ObjectId>,
   last_name: string,
   salary: number,
 };
