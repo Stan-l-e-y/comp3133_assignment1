@@ -72,11 +72,19 @@ export const resolvers: Resolvers = {
     },
 
     async updateEmployee(_, { id, updateInput }) {
-      const employee = await (
-        await Employee.findByIdAndUpdate(id, updateInput)
-      ).save();
+      const employee = await await Employee.findByIdAndUpdate(id, updateInput);
+      await employee.save();
 
       return employee;
+    },
+
+    async deleteEmpoyee(_, { id }) {
+      const deleted = await Employee.findByIdAndRemove(id);
+
+      if (deleted) {
+        return 'Successfully deleted';
+      }
+      return 'Employee not found';
     },
   },
 };

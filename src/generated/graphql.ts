@@ -54,6 +54,7 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addEmployee: Employee;
+  deleteEmpoyee: Scalars['String'];
   signUp: User;
   updateEmployee?: Maybe<Employee>;
 };
@@ -61,6 +62,11 @@ export type Mutation = {
 
 export type MutationAddEmployeeArgs = {
   addEmployeeInput?: InputMaybe<AddEmployeeInput>;
+};
+
+
+export type MutationDeleteEmpoyeeArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -270,6 +276,7 @@ export type EmployeeResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addEmployee?: Resolver<ResolversTypes['Employee'], ParentType, ContextType, Partial<MutationAddEmployeeArgs>>;
+  deleteEmpoyee?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteEmpoyeeArgs, 'id'>>;
   signUp?: Resolver<ResolversTypes['User'], ParentType, ContextType, Partial<MutationSignUpArgs>>;
   updateEmployee?: Resolver<Maybe<ResolversTypes['Employee']>, ParentType, ContextType, RequireFields<MutationUpdateEmployeeArgs, 'id'>>;
 }>;

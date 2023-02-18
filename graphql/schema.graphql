@@ -57,4 +57,5 @@ type Mutation {
   signUp(signUpInput: SignUpInput): User!
   addEmployee(addEmployeeInput: AddEmployeeInput): Employee!
   updateEmployee(id: String!, updateInput: EmployeeUpdateInput): Employee
+  deleteEmpoyee(id: String!): String!
 }
