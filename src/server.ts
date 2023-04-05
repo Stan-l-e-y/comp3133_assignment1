@@ -6,19 +6,20 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { resolvers } from '../graphql/resolvers.js';
 import { readFileSync } from 'fs';
-import { DIRECTIVES } from '@graphql-codegen/typescript-mongodb'
+import { DIRECTIVES } from '@graphql-codegen/typescript-mongodb';
 
-
-const typeDefs = readFileSync('./graphql/schema.graphql', { encoding: 'utf-8' });
+const typeDefs = readFileSync('./graphql/schema.graphql', {
+  encoding: 'utf-8',
+});
 
 const server = new ApolloServer({
-  typeDefs : [typeDefs, DIRECTIVES],
+  typeDefs: [typeDefs, DIRECTIVES],
   resolvers,
 });
 
 await server.start();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const MONGODB_URI =
   'mongodb+srv://ThisIsForSchool:lSaFPLvHIk2bPCCz@cluster0.mtqaf6e.mongodb.net/test?retryWrites=true&w=majority';
 
@@ -30,8 +31,6 @@ app.use(
   bodyParser.json(),
   expressMiddleware(server)
 );
-
-
 
 try {
   const mongoConnect = async () => {
