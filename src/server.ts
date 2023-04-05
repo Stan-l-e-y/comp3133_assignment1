@@ -31,7 +31,7 @@ app.use(
   bodyParser.json(),
   expressMiddleware(server)
 );
-
+app.use(cors({ origin: '*', credentials: true }));
 try {
   const mongoConnect = async () => {
     await connect(MONGODB_URI);
