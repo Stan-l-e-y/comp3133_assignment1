@@ -32,6 +32,7 @@ app.use(
   expressMiddleware(server)
 );
 app.use(cors({ origin: '*', credentials: true }));
+console.log('test');
 try {
   const mongoConnect = async () => {
     await connect(MONGODB_URI);
