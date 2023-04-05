@@ -44,7 +44,7 @@ try {
 
   // app.listen(PORT, () => console.log(`listening on port ${PORT}`));
   await new Promise<void>((resolve) => app.listen({ port: PORT }, resolve));
-  console.log(`Server ready at http://localhost:${PORT}/`);
+  console.log(`Server ready at chicken wing http://localhost:${PORT}/`);
 } catch (err) {
   console.error(err);
 }
