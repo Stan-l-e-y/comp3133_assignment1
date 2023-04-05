@@ -7,7 +7,7 @@
   "scripts": {
     "generate": "graphql-codegen --config codegen.cjs",
     "compile": "npm run generate && tsc",
-    "start": "tsc && nodemon ./dist/src/server.js",
+    "start": "nodemon ./dist/src/server.js",
     "old-start": "npm i && npm run compile && nodemon ./dist/src/server.js"
   },
   "author": "",
